@@ -7,29 +7,30 @@
 body {
   font-family: Arial, sans-serif;
   background: #f7f7f2;
-  color: #111827;
+  color: #1f2937;
+}
+
+/* Screens */
+.screen {
+  min-height: 100vh;
+  padding: 24px;
 }
 
 .hidden {
   display: none !important;
 }
 
-.screen {
-  min-height: 100vh;
-  padding: 24px;
-}
-
-/* TITLE SCREEN */
+/* Title Screen */
 .title-screen {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #ffc907, #fff4c2);
+  background: linear-gradient(135deg, #ffc907, #fff7d6);
 }
 
 .title-card {
   width: 100%;
-  max-width: 560px;
+  max-width: 520px;
   background: white;
   border: 4px solid #111827;
   border-radius: 24px;
@@ -39,30 +40,31 @@ body {
 }
 
 .brand {
-  color: #00a99d;
   font-weight: bold;
+  color: #00a99d;
   margin-bottom: 12px;
 }
 
 .title-card h1 {
-  font-size: 56px;
-  margin-bottom: 14px;
+  font-size: 52px;
+  margin-bottom: 12px;
+  color: #111827;
 }
 
 .subtitle {
   font-size: 18px;
-  line-height: 1.5;
   margin-bottom: 24px;
+  line-height: 1.5;
 }
 
 button,
 .link-btn {
   display: block;
   width: 100%;
+  border: none;
+  border-radius: 14px;
   padding: 14px;
   margin: 12px 0;
-  border-radius: 14px;
-  border: none;
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
@@ -79,7 +81,6 @@ button,
 .secondary-btn {
   background: #111827;
   color: white;
-  border: 3px solid #111827;
 }
 
 .link-btn {
@@ -90,27 +91,26 @@ button,
 
 .how-text {
   margin-top: 18px;
-  text-align: left;
   background: #eefaf8;
   border-left: 6px solid #00a99d;
-  padding: 16px;
-  border-radius: 12px;
+  padding: 14px;
+  text-align: left;
   line-height: 1.5;
 }
 
-/* GAME SCREEN */
+/* Game Screen */
 .game-screen {
   background: #f7f7f2;
 }
 
 .top-bar {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 2fr;
+  grid-template-columns: 1fr 1fr 2fr;
   gap: 14px;
   margin-bottom: 20px;
 }
 
-.stat-box {
+.top-bar div {
   background: white;
   border: 3px solid #111827;
   border-radius: 16px;
@@ -118,14 +118,14 @@ button,
   box-shadow: 4px 4px 0 #111827;
 }
 
-.stat-box span {
+.top-bar span {
   display: block;
-  color: #6b7280;
-  font-weight: bold;
   font-size: 14px;
+  font-weight: bold;
+  color: #6b7280;
 }
 
-.stat-box strong {
+.top-bar strong {
   font-size: 28px;
 }
 
@@ -146,14 +146,15 @@ button,
   transition: width 0.3s ease;
 }
 
+/* Layout */
 .game-layout {
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 20px;
 }
 
-.map-card,
-.side-panel {
+.village-area,
+.supplies {
   background: white;
   border: 4px solid #111827;
   border-radius: 20px;
@@ -161,77 +162,36 @@ button,
   box-shadow: 6px 6px 0 #111827;
 }
 
-.map-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  align-items: center;
-  margin-bottom: 14px;
+.village-area h2,
+.supplies h2 {
+  margin-bottom: 16px;
+  color: #111827;
 }
 
-.map-header h2 {
-  font-size: 26px;
-}
-
-.map-header p {
-  font-weight: bold;
-  color: #00a99d;
-}
-
-.game-map {
+/* Village */
+.sky {
+  height: 80px;
+  background: #dff7ff;
+  border: 3px solid #111827;
+  border-radius: 18px 18px 0 0;
   position: relative;
-  min-height: 430px;
-  background: linear-gradient(#dff7ff 0%, #dff7ff 42%, #fff4c2 42%, #fff4c2 100%);
-  border: 3px solid #111827;
-  border-radius: 18px;
   overflow: hidden;
-  padding: 24px;
-}
-
-#pollutionLayer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 10;
-}
-
-.pollution {
-  position: absolute;
-  width: 54px;
-  height: 54px;
-  border: 3px solid #111827;
-  border-radius: 50%;
-  background: #6b7280;
-  color: white;
-  font-size: 22px;
-  pointer-events: auto;
-  box-shadow: 3px 3px 0 #111827;
-  animation: pop 0.25s ease;
-}
-
-@keyframes pop {
-  from {
-    transform: scale(0.5);
-  }
-  to {
-    transform: scale(1);
-  }
 }
 
 .sun {
-  width: 54px;
-  height: 54px;
+  width: 45px;
+  height: 45px;
   background: #ffc907;
   border: 3px solid #111827;
   border-radius: 50%;
   position: absolute;
-  top: 24px;
-  left: 28px;
+  top: 15px;
+  left: 25px;
 }
 
 .cloud {
-  width: 88px;
-  height: 34px;
+  width: 80px;
+  height: 28px;
   background: white;
   border: 3px solid #111827;
   border-radius: 30px;
@@ -239,128 +199,114 @@ button,
 }
 
 .cloud-one {
-  top: 34px;
-  right: 180px;
+  top: 20px;
+  right: 120px;
 }
 
 .cloud-two {
-  top: 60px;
-  right: 60px;
+  top: 38px;
+  right: 30px;
 }
 
-.well-area {
-  margin-top: 135px;
+.village {
+  min-height: 360px;
+  background: #fff7d6;
+  border: 3px solid #111827;
+  border-top: none;
+  border-radius: 0 0 18px 18px;
+  padding: 26px;
 }
 
 .well {
-  width: 110px;
+  width: 100px;
+  padding: 18px 8px;
   background: #ffc907;
-  border: 4px solid #111827;
-  border-radius: 16px;
-  padding: 20px 10px;
+  border: 3px solid #111827;
+  border-radius: 12px;
   font-weight: bold;
   text-align: center;
+  margin-bottom: 40px;
 }
 
-.build-line {
+.pipe-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 34px;
-  flex-wrap: wrap;
+  margin-bottom: 45px;
 }
 
-.build-slot {
-  min-width: 94px;
-  min-height: 50px;
+.pipe {
+  width: 90px;
+  height: 24px;
+  background: #d1d5db;
+  border: 3px solid #111827;
+  border-radius: 99px;
+}
+
+.pipe.active {
+  background: #00a99d;
+}
+
+.leak {
+  font-size: 28px;
+  opacity: 1;
+}
+
+.leak.fixed {
+  opacity: 0.2;
+}
+
+.filter,
+.tank {
+  padding: 12px;
   background: #e5e7eb;
   border: 3px solid #111827;
-  color: #111827;
-  border-radius: 14px;
-  font-size: 15px;
-  box-shadow: 3px 3px 0 #111827;
+  border-radius: 12px;
+  font-weight: bold;
 }
 
-.build-slot.active-target {
-  background: #ffc907;
-  outline: 5px solid rgba(255, 201, 7, 0.35);
-  transform: translateY(-3px);
-}
-
-.build-slot.built {
+.filter.active,
+.tank.active {
   background: #00a99d;
   color: white;
 }
 
-.leak-slot {
-  background: #fee2e2;
-}
-
-.filter-slot {
-  background: #dbeafe;
-}
-
-.tank-slot {
-  background: #e0f2fe;
-}
-
-.village {
-  position: absolute;
-  right: 34px;
-  bottom: 32px;
+.houses {
   display: flex;
-  gap: 16px;
-  font-size: 50px;
+  gap: 24px;
+  font-size: 48px;
 }
 
 .feedback {
   margin-top: 18px;
   background: #111827;
   color: white;
-  border-radius: 16px;
+  border-radius: 14px;
   padding: 16px;
-  text-align: center;
   font-size: 18px;
   font-weight: bold;
+  text-align: center;
 }
 
-/* SIDE PANEL */
-.side-panel h2 {
-  margin-bottom: 12px;
-}
-
+/* Supplies */
 .supply-btn {
   background: #ffc907;
-  color: #111827;
   border: 3px solid #111827;
-  transition: 0.2s ease;
+  color: #111827;
+  transition: 0.2s;
 }
 
 .supply-btn:hover {
   transform: translateY(-2px);
 }
 
-.supply-btn.selected {
-  background: #00a99d;
-  color: white;
-  transform: scale(1.03);
+.supply-btn:disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
+  transform: none;
 }
 
-.mission-box,
-.streak-box {
-  margin-top: 18px;
-  border: 3px solid #111827;
-  border-radius: 16px;
-  padding: 14px;
-  background: #f9fafb;
-}
-
-.mission-box h3,
-.streak-box h3 {
-  margin-bottom: 8px;
-}
-
-/* NAV */
+/* Bottom Nav */
 .bottom-nav {
   display: flex;
   gap: 12px;
@@ -373,25 +319,24 @@ button,
   color: #111827;
 }
 
-/* MODAL */
+/* Modal */
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(17, 24, 39, 0.82);
+  background: rgba(17, 24, 39, 0.8);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   padding: 24px;
-  z-index: 50;
 }
 
 .modal-card {
   width: 100%;
-  max-width: 460px;
+  max-width: 420px;
   background: white;
   border: 4px solid #111827;
   border-radius: 24px;
-  padding: 30px;
+  padding: 28px;
   text-align: center;
   box-shadow: 8px 8px 0 #ffc907;
 }
@@ -404,38 +349,24 @@ button,
 .modal-card p {
   font-size: 18px;
   line-height: 1.5;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
-/* MOBILE */
-@media (max-width: 900px) {
+/* Mobile */
+@media (max-width: 800px) {
   .top-bar {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 
   .game-layout {
     grid-template-columns: 1fr;
   }
 
-  .map-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .game-map {
-    min-height: 520px;
-  }
-
-  .village {
-    position: static;
-    margin-top: 40px;
-  }
-
-  .bottom-nav {
-    flex-direction: column;
+  .pipe-row {
+    flex-wrap: wrap;
   }
 
   .title-card h1 {
-    font-size: 42px;
+    font-size: 40px;
   }
 }
