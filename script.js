@@ -1,167 +1,82 @@
 const titleScreen = document.getElementById("titleScreen");
 const gameScreen = document.getElementById("gameScreen");
+
 const startBtn = document.getElementById("startBtn");
 const howBtn = document.getElementById("howBtn");
-const howText = document.getElementById("howText");
+const howBox = document.getElementById("howBox");
+const restartBtn = document.getElementById("restartBtn");
+const homeBtn = document.getElementById("homeBtn");
 
 const scoreText = document.getElementById("score");
 const timerText = document.getElementById("timer");
-const meterText = document.getElementById("meterText");
+const waterText = document.getElementById("waterText");
 const meterFill = document.getElementById("meterFill");
-const feedback = document.getElementById("feedback");
+const message = document.getElementById("message");
 
-const supplyButtons = document.querySelectorAll(".supply-btn");
-
-const restartBtn = document.getElementById("restartBtn");
-const homeBtn = document.getElementById("homeBtn");
-const pauseBtn = document.getElementById("pauseBtn");
-
-const endModal = document.getElementById("endModal");
-const endTitle = document.getElementById("endTitle");
-const endMessage = document.getElementById("endMessage");
-const playAgainBtn = document.getElementById("playAgainBtn");
-
-const pipe1 = document.getElementById("pipe1");
-const pipe2 = document.getElementById("pipe2");
-const pipe3 = document.getElementById("pipe3");
-const leak = document.getElementById("leak");
-const filter = document.getElementById("filter");
-const tank = document.getElementById("tank");
+const pipePiece = document.getElementById("pipePiece");
+const leakPiece = document.getElementById("leakPiece");
+const filterPiece = document.getElementById("filterPiece");
+const tankPiece = document.getElementById("tankPiece");
 
 let score = 0;
-let timeLeft = 60;
-let waterMeter = 0;
-let currentStep = 0;
-let gameRunning = false;
-let paused = false;
-let timerInterval = null;
+let timeLeft = 45;
+let water = 0;
+let step = 0;
+let gameStarted = false;
+let timer;
 
-const steps = [
-  {
-    item: "pipe",
-    message: "Great! The first pipe is connected.",
-    points: 10,
-    progress: 15,
-    visual: () => pipe1.classList.add("active")
-  },
-  {
-    item: "tool",
-    message: "Nice work! You fixed the leak.",
-    points: 15,
-    progress: 20,
-    visual: () => leak.classList.add("fixed")
-  },
-  {
-    item: "pipe",
-    message: "Good job! The second pipe is connected.",
-    points: 10,
-    progress: 15,
-    visual: () => pipe2.classList.add("active")
-  },
-  {
-    item: "filter",
-    message: "Awesome! The water filter is installed.",
-    points: 20,
-    progress: 20,
-    visual: () => filter.classList.add("active")
-  },
-  {
-    item: "pipe",
-    message: "Almost there! The final pipe is connected.",
-    points: 10,
-    progress: 15,
-    visual: () => pipe3.classList.add("active")
-  },
-  {
-    item: "tank",
-    message: "Amazing! The water tank is ready.",
-    points: 25,
-    progress: 15,
-    visual: () => tank.classList.add("active")
-  }
+const correctOrder = ["pipe", "tool", "filter", "tank"];
+
+const messages = [
+  "Great! The pipe is connected.",
+  "Nice work! You fixed the leak.",
+  "Awesome! The filter is added.",
+  "Amazing! The water tank is ready."
 ];
 
-howBtn.addEventListener("click", () => {
-  howText.classList.toggle("hidden");
+const pieces = {
+  pipe: pipePiece,
+  tool: leakPiece,
+  filter: filterPiece,
+  tank: tankPiece
+};
+
+howBtn.addEventListener("click", function () {
+  howBox.classList.toggle("hidden");
 });
 
-startBtn.addEventListener("click", () => {
+startBtn.addEventListener("click", function () {
   titleScreen.classList.add("hidden");
   gameScreen.classList.remove("hidden");
   startGame();
 });
 
-restartBtn.addEventListener("click", startGame);
-playAgainBtn.addEventListener("click", () => {
-  endModal.classList.add("hidden");
-  startGame();
-});
+restartBtn.addEventListener("click", restartGame);
 
-homeBtn.addEventListener("click", () => {
-  stopTimer();
+homeBtn.addEventListener("click", function () {
+  clearInterval(timer);
   gameScreen.classList.add("hidden");
   titleScreen.classList.remove("hidden");
-  endModal.classList.add("hidden");
-});
-
-pauseBtn.addEventListener("click", () => {
-  if (!gameRunning) return;
-
-  paused = !paused;
-
-  if (paused) {
-    pauseBtn.textContent = "Resume";
-    feedback.textContent = "Game paused.";
-  } else {
-    pauseBtn.textContent = "Pause";
-    feedback.textContent = "Game resumed. Keep building!";
-  }
-});
-
-supplyButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    if (!gameRunning || paused) return;
-
-    const selectedItem = button.dataset.item;
-    checkPlayerMove(selectedItem, button);
-  });
+  restartGame();
 });
 
 function startGame() {
+  clearInterval(timer);
+
   score = 0;
-  timeLeft = 60;
-  waterMeter = 0;
-  currentStep = 0;
-  gameRunning = true;
-  paused = false;
+  timeLeft = 45;
+  water = 0;
+  step = 0;
+  gameStarted = true;
 
-  pauseBtn.textContent = "Pause";
-  feedback.textContent = "Start by clicking a pipe to connect the well.";
+  resetPieces();
+  updateScreen();
 
-  endModal.classList.add("hidden");
+  message.textContent = "Start by adding the pipe.";
 
-  supplyButtons.forEach((button) => {
-    button.disabled = false;
-  });
-
-  pipe1.classList.remove("active");
-  pipe2.classList.remove("active");
-  pipe3.classList.remove("active");
-  leak.classList.remove("fixed");
-  filter.classList.remove("active");
-  tank.classList.remove("active");
-
-  updateDisplay();
-  stopTimer();
-  startTimer();
-}
-
-function startTimer() {
-  timerInterval = setInterval(() => {
-    if (!gameRunning || paused) return;
-
+  timer = setInterval(function () {
     timeLeft--;
-    updateDisplay();
+    updateScreen();
 
     if (timeLeft <= 0) {
       loseGame();
@@ -169,29 +84,24 @@ function startTimer() {
   }, 1000);
 }
 
-function stopTimer() {
-  clearInterval(timerInterval);
-}
+function chooseSupply(supply) {
+  if (!gameStarted) {
+    message.textContent = "Click Start Game first.";
+    return;
+  }
 
-function checkPlayerMove(selectedItem, button) {
-  const correctStep = steps[currentStep];
+  if (supply === correctOrder[step]) {
+    score += 10;
+    water += 25;
 
-  if (selectedItem === correctStep.item) {
-    score += correctStep.points;
-    waterMeter += correctStep.progress;
+    pieces[supply].classList.add("built");
+    pieces[supply].textContent = "Done ✅";
 
-    if (waterMeter > 100) {
-      waterMeter = 100;
-    }
+    message.textContent = messages[step];
 
-    feedback.textContent = correctStep.message;
-    correctStep.visual();
-    button.disabled = true;
+    step++;
 
-    currentStep++;
-    updateDisplay();
-
-    if (waterMeter >= 100 || currentStep >= steps.length) {
+    if (water >= 100) {
       winGame();
     }
   } else {
@@ -201,40 +111,54 @@ function checkPlayerMove(selectedItem, button) {
       score = 0;
     }
 
-    feedback.textContent = "Try again! That is not the supply needed right now.";
-    updateDisplay();
+    message.textContent = "Wrong choice! Try the correct supply in order.";
   }
+
+  updateScreen();
 }
 
-function updateDisplay() {
+function updateScreen() {
   scoreText.textContent = score;
   timerText.textContent = timeLeft;
-  meterText.textContent = waterMeter + "%";
-  meterFill.style.width = waterMeter + "%";
+  waterText.textContent = water + "%";
+  meterFill.style.width = water + "%";
 }
 
 function winGame() {
-  gameRunning = false;
-  stopTimer();
-
-  feedback.textContent = "You brought clean water to the village!";
-
-  endTitle.textContent = "You Win!";
-  endMessage.textContent =
-    "Great job! You built a clean water system and helped the village get safe water.";
-
-  endModal.classList.remove("hidden");
+  clearInterval(timer);
+  gameStarted = false;
+  message.textContent = "You win! You brought clean water to the village!";
 }
 
 function loseGame() {
-  gameRunning = false;
-  stopTimer();
+  clearInterval(timer);
+  gameStarted = false;
+  message.textContent = "Time is up! Try again to help the village get clean water.";
+}
 
-  feedback.textContent = "Time is up! The village still needs clean water.";
+function restartGame() {
+  clearInterval(timer);
 
-  endTitle.textContent = "Time is Up!";
-  endMessage.textContent =
-    "Try again! Connect the pipes, fix the leak, and complete the water system faster.";
+  score = 0;
+  timeLeft = 45;
+  water = 0;
+  step = 0;
+  gameStarted = false;
 
-  endModal.classList.remove("hidden");
+  resetPieces();
+  updateScreen();
+
+  message.textContent = "Click Start Game to begin.";
+}
+
+function resetPieces() {
+  pipePiece.classList.remove("built");
+  leakPiece.classList.remove("built");
+  filterPiece.classList.remove("built");
+  tankPiece.classList.remove("built");
+
+  pipePiece.textContent = "Pipe";
+  leakPiece.textContent = "Leak";
+  filterPiece.textContent = "Filter";
+  tankPiece.textContent = "Tank";
 }

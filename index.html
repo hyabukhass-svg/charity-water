@@ -3,122 +3,123 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Well Builder | charity: water Game</title>
+  <title>Well Builder</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <!-- TITLE SCREEN -->
-  <section id="titleScreen" class="screen title-screen">
-    <div class="title-card">
-      <p class="brand">charity: water inspired game</p>
-      <h1>Well Builder</h1>
-      <p class="subtitle">
-        Build a clean water system and bring safe water to a village.
-      </p>
+  <section id="titleScreen" class="page">
+    <div class="screen-wrap">
 
-      <button id="startBtn" class="main-btn">Start Game</button>
-      <button id="howBtn" class="secondary-btn">How to Play</button>
-      <a class="link-btn" href="https://www.charitywater.org/" target="_blank">
-        Learn About charity: water
-      </a>
+      <div class="mini-scene">
+        <div class="drops">💧 💧 💧</div>
+        <div class="sun"></div>
 
-      <p id="howText" class="how-text hidden">
-        Click the correct supplies in order. Connect pipes, fix leaks, add a filter,
-        and place a water tank before time runs out.
-      </p>
+        <div class="ground">
+          <div class="house house-one"></div>
+          <div class="house house-two"></div>
+          <div class="well-mini"></div>
+          <div class="pipe-mini"></div>
+          <div class="filter-mini">F</div>
+          <div class="tank-mini">TANK</div>
+        </div>
+      </div>
+
+      <div class="main-card">
+        <div class="badge">⚡ A CHARITY: WATER EXPERIENCE</div>
+
+        <h1>Well Builder</h1>
+
+        <p class="subtitle">
+          Build a clean water system and bring safe water to a village.
+        </p>
+
+        <div class="info-row">
+          <div class="pill">⏱️ 45 Seconds</div>
+          <div class="pill">🏘️ 1 Village</div>
+          <div class="pill">💧 Clean Water</div>
+        </div>
+
+        <button id="startBtn" class="start-btn">▶ Start Game</button>
+        <button id="howBtn" class="outline-btn">📖 How to Play</button>
+
+        <a class="learn-link" href="https://www.charitywater.org/" target="_blank">
+          🌍 Learn About charity: water →
+        </a>
+
+        <div id="howBox" class="how-box hidden">
+          Click the supplies in the correct order: pipe, tool, filter, and tank.
+          Each correct choice fills the clean water meter. Finish before time runs out!
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- GAME SCREEN -->
-  <section id="gameScreen" class="screen game-screen hidden">
+  <section id="gameScreen" class="page hidden">
+    <div class="game-card">
 
-    <header class="top-bar">
-      <div>
-        <span>Score</span>
-        <strong id="score">0</strong>
-      </div>
+      <h2 class="game-title">Well Builder</h2>
 
-      <div>
-        <span>Timer</span>
-        <strong id="timer">60</strong>
-      </div>
-
-      <div class="meter-box">
-        <span>Water Meter</span>
-        <strong id="meterText">0%</strong>
-        <div class="meter">
-          <div id="meterFill"></div>
-        </div>
-      </div>
-    </header>
-
-    <main class="game-layout">
-
-      <!-- GAME AREA -->
-      <section class="village-area">
-        <h2>Village Water System</h2>
-
-        <div class="sky">
-          <div class="sun"></div>
-          <div class="cloud cloud-one"></div>
-          <div class="cloud cloud-two"></div>
+      <div class="stats">
+        <div class="stat">
+          Score
+          <span id="score">0</span>
         </div>
 
-        <div class="village">
-          <div class="well">WELL</div>
+        <div class="stat">
+          Time
+          <span id="timer">45</span>
+        </div>
 
-          <div class="pipe-row">
-            <div id="pipe1" class="pipe"></div>
-            <div id="leak" class="leak">💧</div>
-            <div id="pipe2" class="pipe"></div>
-            <div id="filter" class="filter">Filter</div>
-            <div id="pipe3" class="pipe"></div>
-            <div id="tank" class="tank">Tank</div>
-          </div>
+        <div class="stat">
+          Water
+          <span id="waterText">0%</span>
+        </div>
+      </div>
 
-          <div class="houses">
-            <div class="house">🏠</div>
-            <div class="house">🏡</div>
-            <div class="house">🏠</div>
+      <div class="meter">
+        <div id="meterFill"></div>
+      </div>
+
+      <div class="game-area">
+        <div class="game-sky">
+          <span>💧</span>
+          <span>💧</span>
+          <span>💧</span>
+        </div>
+
+        <div class="village-scene">
+          <div class="village-icons">🏠 🏡 ⛲ 🏠</div>
+
+          <div class="build-row">
+            <div id="pipePiece" class="build-piece">Pipe</div>
+            <div id="leakPiece" class="build-piece">Leak</div>
+            <div id="filterPiece" class="build-piece">Filter</div>
+            <div id="tankPiece" class="build-piece">Tank</div>
           </div>
         </div>
+      </div>
 
-        <div id="feedback" class="feedback">
-          Click Start Game to begin!
-        </div>
-      </section>
+      <div class="supplies">
+        <button onclick="chooseSupply('pipe')">Add Pipe</button>
+        <button onclick="chooseSupply('tool')">Fix Leak</button>
+        <button onclick="chooseSupply('filter')">Add Filter</button>
+        <button onclick="chooseSupply('tank')">Add Tank</button>
+      </div>
 
-      <!-- SUPPLIES -->
-      <aside class="supplies">
-        <h2>Supplies</h2>
+      <div id="message" class="message">
+        Click Start Game to begin.
+      </div>
 
-        <button class="supply-btn" data-item="pipe">Pipe</button>
-        <button class="supply-btn" data-item="tool">Tool</button>
-        <button class="supply-btn" data-item="pipe">Pipe</button>
-        <button class="supply-btn" data-item="filter">Filter</button>
-        <button class="supply-btn" data-item="pipe">Pipe</button>
-        <button class="supply-btn" data-item="tank">Water Tank</button>
-      </aside>
+      <div class="nav-buttons">
+        <button id="restartBtn" class="dark-btn">Restart</button>
+        <button id="homeBtn" class="dark-btn">Home</button>
+      </div>
 
-    </main>
-
-    <nav class="bottom-nav">
-      <button id="homeBtn">Home</button>
-      <button id="restartBtn">Restart</button>
-      <button id="pauseBtn">Pause</button>
-    </nav>
-
-  </section>
-
-  <!-- END MESSAGE -->
-  <div id="endModal" class="modal hidden">
-    <div class="modal-card">
-      <h2 id="endTitle">Game Over</h2>
-      <p id="endMessage"></p>
-      <button id="playAgainBtn" class="main-btn">Play Again</button>
     </div>
-  </div>
+  </section>
 
   <script src="script.js"></script>
 </body>
