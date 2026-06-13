@@ -1,0 +1,441 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f7f7f2;
+  color: #111827;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.screen {
+  min-height: 100vh;
+  padding: 24px;
+}
+
+/* TITLE SCREEN */
+.title-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ffc907, #fff4c2);
+}
+
+.title-card {
+  width: 100%;
+  max-width: 560px;
+  background: white;
+  border: 4px solid #111827;
+  border-radius: 24px;
+  padding: 36px;
+  text-align: center;
+  box-shadow: 8px 8px 0 #111827;
+}
+
+.brand {
+  color: #00a99d;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.title-card h1 {
+  font-size: 56px;
+  margin-bottom: 14px;
+}
+
+.subtitle {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+button,
+.link-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin: 12px 0;
+  border-radius: 14px;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+
+.main-btn {
+  background: #ffc907;
+  color: #111827;
+  border: 3px solid #111827;
+}
+
+.secondary-btn {
+  background: #111827;
+  color: white;
+  border: 3px solid #111827;
+}
+
+.link-btn {
+  background: white;
+  color: #111827;
+  border: 3px solid #111827;
+}
+
+.how-text {
+  margin-top: 18px;
+  text-align: left;
+  background: #eefaf8;
+  border-left: 6px solid #00a99d;
+  padding: 16px;
+  border-radius: 12px;
+  line-height: 1.5;
+}
+
+/* GAME SCREEN */
+.game-screen {
+  background: #f7f7f2;
+}
+
+.top-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 2fr;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.stat-box {
+  background: white;
+  border: 3px solid #111827;
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 4px 4px 0 #111827;
+}
+
+.stat-box span {
+  display: block;
+  color: #6b7280;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.stat-box strong {
+  font-size: 28px;
+}
+
+.meter {
+  width: 100%;
+  height: 18px;
+  background: #e5e7eb;
+  border: 2px solid #111827;
+  border-radius: 99px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+#meterFill {
+  width: 0%;
+  height: 100%;
+  background: #00a99d;
+  transition: width 0.3s ease;
+}
+
+.game-layout {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 20px;
+}
+
+.map-card,
+.side-panel {
+  background: white;
+  border: 4px solid #111827;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 6px 6px 0 #111827;
+}
+
+.map-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.map-header h2 {
+  font-size: 26px;
+}
+
+.map-header p {
+  font-weight: bold;
+  color: #00a99d;
+}
+
+.game-map {
+  position: relative;
+  min-height: 430px;
+  background: linear-gradient(#dff7ff 0%, #dff7ff 42%, #fff4c2 42%, #fff4c2 100%);
+  border: 3px solid #111827;
+  border-radius: 18px;
+  overflow: hidden;
+  padding: 24px;
+}
+
+#pollutionLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.pollution {
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  border: 3px solid #111827;
+  border-radius: 50%;
+  background: #6b7280;
+  color: white;
+  font-size: 22px;
+  pointer-events: auto;
+  box-shadow: 3px 3px 0 #111827;
+  animation: pop 0.25s ease;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.sun {
+  width: 54px;
+  height: 54px;
+  background: #ffc907;
+  border: 3px solid #111827;
+  border-radius: 50%;
+  position: absolute;
+  top: 24px;
+  left: 28px;
+}
+
+.cloud {
+  width: 88px;
+  height: 34px;
+  background: white;
+  border: 3px solid #111827;
+  border-radius: 30px;
+  position: absolute;
+}
+
+.cloud-one {
+  top: 34px;
+  right: 180px;
+}
+
+.cloud-two {
+  top: 60px;
+  right: 60px;
+}
+
+.well-area {
+  margin-top: 135px;
+}
+
+.well {
+  width: 110px;
+  background: #ffc907;
+  border: 4px solid #111827;
+  border-radius: 16px;
+  padding: 20px 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.build-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 34px;
+  flex-wrap: wrap;
+}
+
+.build-slot {
+  min-width: 94px;
+  min-height: 50px;
+  background: #e5e7eb;
+  border: 3px solid #111827;
+  color: #111827;
+  border-radius: 14px;
+  font-size: 15px;
+  box-shadow: 3px 3px 0 #111827;
+}
+
+.build-slot.active-target {
+  background: #ffc907;
+  outline: 5px solid rgba(255, 201, 7, 0.35);
+  transform: translateY(-3px);
+}
+
+.build-slot.built {
+  background: #00a99d;
+  color: white;
+}
+
+.leak-slot {
+  background: #fee2e2;
+}
+
+.filter-slot {
+  background: #dbeafe;
+}
+
+.tank-slot {
+  background: #e0f2fe;
+}
+
+.village {
+  position: absolute;
+  right: 34px;
+  bottom: 32px;
+  display: flex;
+  gap: 16px;
+  font-size: 50px;
+}
+
+.feedback {
+  margin-top: 18px;
+  background: #111827;
+  color: white;
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* SIDE PANEL */
+.side-panel h2 {
+  margin-bottom: 12px;
+}
+
+.supply-btn {
+  background: #ffc907;
+  color: #111827;
+  border: 3px solid #111827;
+  transition: 0.2s ease;
+}
+
+.supply-btn:hover {
+  transform: translateY(-2px);
+}
+
+.supply-btn.selected {
+  background: #00a99d;
+  color: white;
+  transform: scale(1.03);
+}
+
+.mission-box,
+.streak-box {
+  margin-top: 18px;
+  border: 3px solid #111827;
+  border-radius: 16px;
+  padding: 14px;
+  background: #f9fafb;
+}
+
+.mission-box h3,
+.streak-box h3 {
+  margin-bottom: 8px;
+}
+
+/* NAV */
+.bottom-nav {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.bottom-nav button {
+  background: white;
+  border: 3px solid #111827;
+  color: #111827;
+}
+
+/* MODAL */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.82);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  z-index: 50;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 460px;
+  background: white;
+  border: 4px solid #111827;
+  border-radius: 24px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 8px 8px 0 #ffc907;
+}
+
+.modal-card h2 {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+.modal-card p {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .top-bar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .game-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .map-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .game-map {
+    min-height: 520px;
+  }
+
+  .village {
+    position: static;
+    margin-top: 40px;
+  }
+
+  .bottom-nav {
+    flex-direction: column;
+  }
+
+  .title-card h1 {
+    font-size: 42px;
+  }
+}

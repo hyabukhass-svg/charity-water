@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Well Builder | charity: water Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <section id="titleScreen" class="screen title-screen">
+    <div class="title-card">
+      <p class="brand">charity: water inspired game</p>
+      <h1>Well Builder</h1>
+      <p class="subtitle">
+        Build a clean water system, protect it from pollution, and bring safe water to a village.
+      </p>
+
+      <button id="startBtn" class="main-btn">Start Game</button>
+      <button id="howBtn" class="secondary-btn">How to Play</button>
+      <a class="link-btn" href="https://www.charitywater.org/" target="_blank">
+        Learn About charity: water
+      </a>
+
+      <div id="howText" class="how-text hidden">
+        <p><strong>How to play:</strong></p>
+        <p>Click a supply, then click the glowing area on the map.</p>
+        <p>Build the system in order: pipes, tools, filter, and water tank.</p>
+        <p>Click pollution drops quickly before they hurt your timer.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="gameScreen" class="screen game-screen hidden">
+
+    <header class="top-bar">
+      <div class="stat-box">
+        <span>Level</span>
+        <strong id="levelText">1</strong>
+      </div>
+
+      <div class="stat-box">
+        <span>Score</span>
+        <strong id="scoreText">0</strong>
+      </div>
+
+      <div class="stat-box">
+        <span>Timer</span>
+        <strong id="timerText">60</strong>
+      </div>
+
+      <div class="stat-box meter-box">
+        <span>Clean Water Meter</span>
+        <strong id="meterText">0%</strong>
+        <div class="meter">
+          <div id="meterFill"></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="game-layout">
+
+      <section class="map-card">
+        <div class="map-header">
+          <h2 id="levelName">Level 1: First Well</h2>
+          <p id="goalText">Connect the first clean water system.</p>
+        </div>
+
+        <div id="gameMap" class="game-map">
+          <div id="pollutionLayer"></div>
+
+          <div class="sun"></div>
+          <div class="cloud cloud-one"></div>
+          <div class="cloud cloud-two"></div>
+
+          <div class="well-area">
+            <div class="well">Well</div>
+          </div>
+
+          <div class="build-line">
+            <button class="build-slot pipe-slot" data-zone="pipe1" data-empty="Pipe 1">Pipe 1</button>
+            <button class="build-slot leak-slot" data-zone="leak" data-empty="Leak">Leak</button>
+            <button class="build-slot pipe-slot" data-zone="pipe2" data-empty="Pipe 2">Pipe 2</button>
+            <button class="build-slot filter-slot" data-zone="filter" data-empty="Filter">Filter</button>
+            <button class="build-slot pipe-slot" data-zone="pipe3" data-empty="Pipe 3">Pipe 3</button>
+            <button class="build-slot tank-slot" data-zone="tank" data-empty="Tank">Tank</button>
+          </div>
+
+          <div class="village">
+            <div class="house">🏠</div>
+            <div class="house">🏡</div>
+            <div class="house">🏠</div>
+          </div>
+        </div>
+
+        <div id="feedback" class="feedback">
+          Click Start Game to begin.
+        </div>
+      </section>
+
+      <aside class="side-panel">
+        <h2>Supplies</h2>
+
+        <button class="supply-btn" data-item="pipe">Pipe</button>
+        <button class="supply-btn" data-item="tool">Tool</button>
+        <button class="supply-btn" data-item="filter">Filter</button>
+        <button class="supply-btn" data-item="tank">Water Tank</button>
+
+        <div class="mission-box">
+          <h3>Mission</h3>
+          <p id="missionText">Bring clean water to the village.</p>
+        </div>
+
+        <div class="streak-box">
+          <h3>Streak</h3>
+          <p id="streakText">0 correct moves</p>
+        </div>
+      </aside>
+
+    </main>
+
+    <nav class="bottom-nav">
+      <button id="homeBtn">Home</button>
+      <button id="restartBtn">Restart Level</button>
+      <button id="pauseBtn">Pause</button>
+    </nav>
+
+  </section>
+
+  <div id="endModal" class="modal hidden">
+    <div class="modal-card">
+      <h2 id="modalTitle">Level Complete</h2>
+      <p id="modalMessage">Great work!</p>
+      <button id="modalActionBtn" class="main-btn">Next Level</button>
+      <button id="modalHomeBtn" class="secondary-btn">Back Home</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
